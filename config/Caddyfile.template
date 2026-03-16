@@ -1,0 +1,16 @@
+# Caddy reverse proxy configuration.
+# Runs behind Cloudflare proxy (orange cloud ON), so use http:// scheme.
+# Cloudflare handles public HTTPS termination.
+#
+# To add a new service:
+#   1. Add a CNAME in Cloudflare: <subdomain> -> server.{{DOMAIN}}
+#   2. Add a block below: http://<subdomain>.{{DOMAIN}} { reverse_proxy localhost:<PORT> }
+#   3. Reload: sudo systemctl reload caddy
+
+http://server.{{DOMAIN}} {
+    redir https://{{DOMAIN}} permanent
+}
+
+http://ppt.{{DOMAIN}} {
+    reverse_proxy localhost:3000
+}

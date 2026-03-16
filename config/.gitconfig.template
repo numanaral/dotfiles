@@ -1,0 +1,34 @@
+[user]
+    name = {{GIT_NAME}}
+    email = {{GIT_EMAIL}}
+[alias]
+    uncommit = reset --soft HEAD^
+    co = checkout
+    cob = checkout -b
+    com = commit -m
+    st = status
+    pp = "!f() { \
+        if git show-ref --verify --quiet refs/remotes/origin/main; then \
+            branch=main; \
+        else \
+            branch=master; \
+        fi; \
+        git pull origin \"$branch\" --no-rebase; \
+    }; f"
+    pu = !git push --set-upstream origin $(git branch --show-current)
+    amend = !git add -A && git commit -a --amend --no-edit
+    pr = "!f() { gh pr view --web; };f"
+    empty = !git commit --allow-empty -m "Trigger Build"
+    glog = log --oneline --graph --decorate -20
+[push]
+    autoSetupRemote = true
+[core]
+    editor = vim
+[credential "https://github.com"]
+    helper =
+    helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+    helper =
+    helper = !/usr/bin/gh auth git-credential
+[init]
+    defaultBranch = main

@@ -1,0 +1,42 @@
+# Docker
+alias dc="docker compose"
+alias dcu="docker compose up -d"
+alias dcd="docker compose down"
+alias dcr="docker compose run"
+alias dex="docker exec -it"
+alias di="docker inspect"
+alias dim="docker images"
+alias dps="docker ps"
+alias dpsa="docker ps -a"
+alias dsp="docker system prune --all"
+alias dk="docker"
+alias lzd="lazydocker"
+
+# Git
+alias gst="git status"
+alias gd="git diff"
+alias gco="git checkout"
+alias gcob="git checkout -b"
+alias gcom="git commit -m"
+alias gp="git push"
+alias gpl="git pull"
+alias gpu="git push --set-upstream origin \$(git branch --show-current)"
+alias glog="git log --oneline --graph --decorate -20"
+alias gamend="git add -A && git commit -a --amend --no-edit"
+
+# General
+alias ls="ls --color=auto"
+alias ll="ls -alF"
+alias la="ls -A"
+alias ..="cd .."
+alias ...="cd ../.."
+alias cdc="cd ~/code"
+alias zsrc="source ~/.zshrc"
+alias vi="vim"
+alias view="vim -R"
+
+# System
+alias ports="sudo lsof -i -P -n | grep LISTEN"
+alias meminfo="free -h"
+alias cpuinfo="lscpu"
+alias diskinfo="df -h"
