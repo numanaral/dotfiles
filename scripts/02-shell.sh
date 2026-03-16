@@ -58,7 +58,7 @@ done
 
 log_step "Set zsh as default shell"
 if [ "$SHELL" != "$(which zsh)" ]; then
-  run chsh -s "$(which zsh)"
+  run sudo chsh -s "$(which zsh)" "$(whoami)"
   log_success "Default shell set to zsh."
 else
   log_info "Zsh is already the default shell."
