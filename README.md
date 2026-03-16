@@ -2,11 +2,23 @@
 
 Reusable server setup scripts. Configurable via flags, `.env` file, or interactive prompts.
 
+See [REASONING.md](REASONING.md) for why each tool, default, and design decision was made.
+
 ## Quick Start
 
+### One-liner install (fresh server)
+
 ```bash
-git clone git@github.com:numanaral/dotfiles.git
-cd dotfiles
+bash <(curl -fsSL https://raw.githubusercontent.com/numanaral/dotfiles/main/install.sh) --all
+```
+
+This clones the repo to `~/dotfiles` and runs `setup.sh` with any flags you pass.
+
+### Manual install
+
+```bash
+git clone git@github.com:numanaral/dotfiles.git ~/dotfiles
+cd ~/dotfiles
 cp .env.example .env   # fill in your values
 ```
 
@@ -60,7 +72,6 @@ Priority: **flags > `.env` > interactive prompts**.
 | `SETUP_SWAP_SIZE` | `4G` | Swap file size |
 | `SETUP_PYTHON_VERSION` | `3.12` | Python version for pyenv |
 | `SETUP_NODE_VERSION` | `22` | Node.js version for nvm |
-| `SETUP_NODE_FALLBACK_VERSION` | `20` | Fallback Node.js version |
 
 ## File Structure
 

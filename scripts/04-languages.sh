@@ -6,7 +6,6 @@ source "$SCRIPT_DIR/lib/utils.sh"
 
 SETUP_PYTHON_VERSION="${SETUP_PYTHON_VERSION:-3.12}"
 SETUP_NODE_VERSION="${SETUP_NODE_VERSION:-22}"
-SETUP_NODE_FALLBACK_VERSION="${SETUP_NODE_FALLBACK_VERSION:-20}"
 
 log_step "Pyenv prerequisites"
 apt_install \
@@ -62,19 +61,12 @@ fi
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-log_step "Node $SETUP_NODE_VERSION (default) + $SETUP_NODE_FALLBACK_VERSION (fallback)"
+log_step "Node $SETUP_NODE_VERSION"
 if nvm ls "$SETUP_NODE_VERSION" &>/dev/null 2>&1; then
   log_info "Node $SETUP_NODE_VERSION already installed."
 else
   run nvm install "$SETUP_NODE_VERSION"
   log_success "Node $SETUP_NODE_VERSION installed."
-fi
-
-if nvm ls "$SETUP_NODE_FALLBACK_VERSION" &>/dev/null 2>&1; then
-  log_info "Node $SETUP_NODE_FALLBACK_VERSION already installed."
-else
-  run nvm install "$SETUP_NODE_FALLBACK_VERSION"
-  log_success "Node $SETUP_NODE_FALLBACK_VERSION installed."
 fi
 
 run nvm alias default "$SETUP_NODE_VERSION"
