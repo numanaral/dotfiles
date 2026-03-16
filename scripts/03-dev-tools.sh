@@ -44,7 +44,7 @@ SETUP_GIT_NAME=$(prompt_if_empty "$SETUP_GIT_NAME" "Git user name" "numanaral")
 SETUP_GIT_EMAIL=$(prompt_if_empty "$SETUP_GIT_EMAIL" "Git email")
 
 if [ -f "$CONFIG_DIR/.gitconfig.template" ]; then
-  run bash -c "sed -e 's/{{GIT_NAME}}/$SETUP_GIT_NAME/g' -e 's/{{GIT_EMAIL}}/$SETUP_GIT_EMAIL/g' '$CONFIG_DIR/.gitconfig.template' > '$HOME/.gitconfig'"
+  run bash -c "sed -e 's|{{GIT_NAME}}|$SETUP_GIT_NAME|g' -e 's|{{GIT_EMAIL}}|$SETUP_GIT_EMAIL|g' '$CONFIG_DIR/.gitconfig.template' > '$HOME/.gitconfig'"
   log_success "Git config written to ~/.gitconfig."
 else
   run git config --global user.name "$SETUP_GIT_NAME"

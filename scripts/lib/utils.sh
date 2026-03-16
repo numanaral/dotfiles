@@ -97,15 +97,19 @@ require_non_root() {
   fi
 }
 
-# Loads .env file if it exists. Does not override existing env vars.
+# Loads .env file if it exists. Only sets vars that are not already set.
 load_env() {
   local env_file="${1:-.env}"
   if [ -f "$env_file" ]; then
     log_info "Loading config from $env_file"
-    set -a
-    # shellcheck disable=SC1090
-    source "$env_file"
-    set +a
+    while IFS='=' read -r key value; do
+      [[ -z "$key" || "$key" =~ ^# ]] && continue
+      key=$(echo "$key" | xargs)
+      value=$(echo "$value" | xargs)
+      if [ -z "${!key:-}" ]; then
+        export "$key=$value"
+      fi
+    done < "$env_file"
   fi
 }
 
@@ -132,6 +136,10 @@ ensure_line() {
   local file="$1"
   local line="$2"
   if ! grep -qF "$line" "$file" 2>/dev/null; then
-    run bash -c "echo '$line' >> '$file'"
+    if [ "${DRY_RUN:-false}" = "true" ]; then
+      echo -e "${YELLOW}[DRY-RUN]${NC} append to $file: $line"
+    else
+      printf '%s\n' "$line" >> "$file"
+    fi
   fi
 }

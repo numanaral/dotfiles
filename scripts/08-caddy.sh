@@ -25,17 +25,13 @@ log_step "Configure Caddyfile"
 CADDYFILE="/etc/caddy/Caddyfile"
 
 if [ -f "$CONFIG_DIR/Caddyfile.template" ]; then
-  run sudo bash -c "sed 's/{{DOMAIN}}/$SETUP_DOMAIN/g' '$CONFIG_DIR/Caddyfile.template' > '$CADDYFILE'"
+  run sudo bash -c "sed 's|{{DOMAIN}}|$SETUP_DOMAIN|g' '$CONFIG_DIR/Caddyfile.template' > '$CADDYFILE'"
   log_success "Caddyfile written to $CADDYFILE."
 else
   log_warn "Caddyfile.template not found. Writing default config."
   run sudo bash -c "cat > '$CADDYFILE' << EOF
 http://server.$SETUP_DOMAIN {
     redir https://$SETUP_DOMAIN permanent
-}
-
-http://ppt.$SETUP_DOMAIN {
-    reverse_proxy localhost:3000
 }
 EOF"
 fi

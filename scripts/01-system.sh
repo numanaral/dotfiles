@@ -84,7 +84,7 @@ SSHD_CONFIG="/etc/ssh/sshd_config"
 if grep -q "^PermitRootLogin yes" "$SSHD_CONFIG" || grep -q "^#PermitRootLogin" "$SSHD_CONFIG"; then
   run sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' "$SSHD_CONFIG"
   run sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' "$SSHD_CONFIG"
-  run systemctl restart sshd
+  run systemctl restart ssh
   log_success "Root login disabled. Password auth disabled."
 else
   log_info "Root login already disabled."

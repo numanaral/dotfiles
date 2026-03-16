@@ -1,3 +1,11 @@
+# Python
+alias python="python3"
+alias py="python3"
+alias pvm="py -m venv .venv"
+alias psrc="source .venv/bin/activate"
+alias pdesrc="deactivate"
+alias pipupdate="pip install -U pip setuptools wheel"
+
 # Docker
 alias dc="docker compose"
 alias dcu="docker compose up -d"
@@ -24,16 +32,24 @@ alias gpu="git push --set-upstream origin \$(git branch --show-current)"
 alias glog="git log --oneline --graph --decorate -20"
 alias gamend="git add -A && git commit -a --amend --no-edit"
 
-# General
+# Navigation
 alias ls="ls --color=auto"
 alias ll="ls -alF"
 alias la="ls -A"
 alias ..="cd .."
 alias ...="cd ../.."
+alias cdh="cd ~/"
+alias cddo="cd ~/Downloads"
+alias cdd="cd ~/Desktop"
 alias cdc="cd ~/code"
+
+# Shell
 alias zsrc="source ~/.zshrc"
+alias bsrc="source ~/.bashrc"
 alias vi="vim"
 alias view="vim -R"
+alias vcode="code -r"
+alias lsalias="print -rl -- \${(k)aliases}"
 
 # System
 alias ports="sudo lsof -i -P -n | grep LISTEN"

@@ -3,22 +3,20 @@
     email = {{GIT_EMAIL}}
 [alias]
     uncommit = reset --soft HEAD^
+    hardreset = reset --hard origin/master
     co = checkout
-    cob = checkout -b
+    cob = "!f() { prefix=$(git config user.name); if [ -z \"$prefix\" ]; then echo \"git config user.name is not set\"; return 1; fi; git checkout -b \"${prefix}/$1\"; }; f"
     com = commit -m
-    st = status
-    pp = "!f() { \
-        if git show-ref --verify --quiet refs/remotes/origin/main; then \
-            branch=main; \
-        else \
-            branch=master; \
-        fi; \
-        git pull origin \"$branch\" --no-rebase; \
-    }; f"
+    st = "!f() { git stash save $1 -u ; }; f"
+    stap = "!f() { temp=$(git stash list | cut -d : -f 3 | grep -n -w $1 | cut -d : -f 1) ; stashnum=$((temp-1)) ; stashname=$(echo stash@{$stashnum}) ; git stash apply $stashname ; }; f"
+    pp = "!f() { branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed \"s@^refs/remotes/origin/@@\"); if [ -z \"$branch\" ]; then echo \"origin/HEAD not set. Run: git remote set-head origin --auto\"; return 1; fi; git pull origin \"$branch\" --no-rebase; }; f"
     pu = !git push --set-upstream origin $(git branch --show-current)
+    submit = !git push --set-upstream origin $(git branch --show-current)
+    cleanlocal = !git fetch --prune && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
     amend = !git add -A && git commit -a --amend --no-edit
     pr = "!f() { gh pr view --web; };f"
     empty = !git commit --allow-empty -m "Trigger Build"
+    view = "!f() { if [ \"$1\" = \"pr\" ]; then branch=$(git rev-parse --abbrev-ref HEAD); remote_url=$(git config --get remote.origin.url); if [[ $remote_url == *\"github.com\"* ]]; then repo_url=$(echo $remote_url | sed \"s/git@github.com:/https:\\/\\/github.com\\//\" | sed \"s/\\.git$//\"); open \"$repo_url/pull/new/$branch\"; else echo \"Not a GitHub repository\"; fi; else echo \"Usage: git view pr\"; fi; }; f"
     glog = log --oneline --graph --decorate -20
 [push]
     autoSetupRemote = true

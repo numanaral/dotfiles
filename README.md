@@ -56,7 +56,7 @@ Priority: **flags > `.env` > interactive prompts**.
 | `SETUP_USER` | `numanaral` | Non-root user to create |
 | `SETUP_GIT_NAME` | `numanaral` | Git user name |
 | `SETUP_GIT_EMAIL` | *(prompted)* | Git email |
-| `SETUP_DOMAIN` | `server.numanaral.dev` | Base domain for Caddy |
+| `SETUP_DOMAIN` | `numanaral.dev` | Base domain for Caddy |
 | `SETUP_SWAP_SIZE` | `4G` | Swap file size |
 | `SETUP_PYTHON_VERSION` | `3.12` | Python version for pyenv |
 | `SETUP_NODE_VERSION` | `22` | Node.js version for nvm |

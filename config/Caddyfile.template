@@ -11,6 +11,7 @@ http://server.{{DOMAIN}} {
     redir https://{{DOMAIN}} permanent
 }
 
-http://ppt.{{DOMAIN}} {
-    reverse_proxy localhost:3000
-}
+# Add service blocks below. Example:
+# http://myapp.{{DOMAIN}} {
+#     reverse_proxy localhost:8080
+# }
