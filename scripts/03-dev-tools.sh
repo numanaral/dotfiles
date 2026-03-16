@@ -65,12 +65,22 @@ log_step "GitHub authentication"
 if gh auth status &>/dev/null; then
   log_info "Already authenticated with GitHub."
 else
-  log_info "Authenticate with GitHub to add your SSH key."
-  log_info "This will open a browser or give you a code to enter at github.com/login/device."
-  if [ "${DRY_RUN:-false}" != "true" ]; then
+  IS_INTERACTIVE="true"
+  if [ ! -t 0 ] || [ ! -t 1 ]; then
+    IS_INTERACTIVE="false"
+  fi
+
+  if [ "$IS_INTERACTIVE" = "true" ] && [ "${DRY_RUN:-false}" != "true" ]; then
+    log_info "Authenticate with GitHub to add your SSH key."
+    log_info "This will give you a code to enter at github.com/login/device."
     gh auth login --git-protocol ssh --web
     gh ssh-key add "$SSH_KEY.pub" --title "$(hostname)"
     log_success "SSH key added to GitHub."
+  else
+    log_warn "Non-interactive session detected. Skipping gh auth login."
+    log_warn "Run these manually when you have a terminal:"
+    log_warn "  gh auth login --git-protocol ssh --web"
+    log_warn "  gh ssh-key add ~/.ssh/id_ed25519.pub --title \"\$(hostname)\""
   fi
 fi
 
